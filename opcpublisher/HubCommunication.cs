@@ -751,6 +751,10 @@ namespace OpcPublisher
                     Logger.Information($"The internal monitored item message queue is above its capacity of {_monitoredItemsDataQueue.BoundedCapacity}. We have already lost {_enqueueFailureCount} monitored item notifications:(");
                 }
             }
+            else
+            {
+                Logger.Information("Message enqueued");
+            }
         }
 
         /// <summary>
