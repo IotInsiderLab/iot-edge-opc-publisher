@@ -10,6 +10,7 @@ namespace OpcPublisher
     using System.ComponentModel;
     using System.IO;
     using System.Linq;
+    using System.Reflection;
     using System.Threading;
     using static OpcMonitoredItem;
     using static OpcSession;
@@ -23,7 +24,7 @@ namespace OpcPublisher
         public static List<OpcSession> OpcSessions { get; set; }
         public static SemaphoreSlim OpcSessionsListSemaphore { get; set; }
 
-        public static string PublisherNodeConfigurationFilename { get; set; } = $"{System.IO.Directory.GetCurrentDirectory()}{Path.DirectorySeparatorChar}publishednodes.json";
+        public static string PublisherNodeConfigurationFilename { get; set; } = $"{Path.GetDirectoryName(Assembly.GetEntryAssembly().Location)}{Path.DirectorySeparatorChar}publishednodes.json";
 
         public static int NumberOfOpcSessions
         {
