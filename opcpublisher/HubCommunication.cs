@@ -144,7 +144,7 @@ namespace OpcPublisher
                 else
                 {
                     _iotHubClient.ProductInfo = "OpcPublisher";
-                    _iotHubClient.SetRetryPolicy(exponentialRetryPolicy);
+                 //   _iotHubClient.SetRetryPolicy(exponentialRetryPolicy);
                     // register connection status change handler
                     _iotHubClient.SetConnectionStatusChangesHandler(ConnectionStatusChange);
 
