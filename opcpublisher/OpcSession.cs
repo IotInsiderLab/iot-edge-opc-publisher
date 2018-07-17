@@ -270,8 +270,8 @@ namespace OpcPublisher
                             }
                             messageData.Value = valueString.Substring(valueStart, valueLength);
                         }
-                        Logger.Debug($"   IoTCentral key: {messageData.DisplayName}");
-                        Logger.Debug($"   IoTCentral values: {messageData.Value}");
+                        Logger.Information($"   IoTCentral key: {messageData.DisplayName}");
+                        Logger.Information($"   IoTCentral values: {messageData.Value}");
                     }
                 }
                 else
@@ -350,21 +350,21 @@ namespace OpcPublisher
                     // apply patterns
                     messageData.ApplyPatterns(telemetryConfiguration);
 
-                    Logger.Debug($"   ApplicationUri: {messageData.ApplicationUri}");
-                    Logger.Debug($"   EndpointUrl: {messageData.EndpointUrl}");
-                    Logger.Debug($"   DisplayName: {messageData.DisplayName}");
-                    Logger.Debug($"   Value: {messageData.Value}");
+                    Logger.Information($"   ApplicationUri: {messageData.ApplicationUri}");
+                    Logger.Information($"   EndpointUrl: {messageData.EndpointUrl}");
+                    Logger.Information($"   DisplayName: {messageData.DisplayName}");
+                    Logger.Information($"   Value: {messageData.Value}");
                 }
 
                 // add message to fifo send queue
                 if (monitoredItem.Subscription == null)
                 {
-                    Logger.Debug($"Subscription already removed. No more details available.");
+                    Logger.Information($"Subscription already removed. No more details available.");
                 }
                 else
                 {
-                    Logger.Debug($"Enqueue a new message from subscription {(monitoredItem.Subscription == null ? "removed" : monitoredItem.Subscription.Id.ToString())}");
-                    Logger.Debug($" with publishing interval: {monitoredItem.Subscription.PublishingInterval} and sampling interval: {monitoredItem.SamplingInterval}):");
+                    Logger.Information($"Enqueue a new message from subscription {(monitoredItem.Subscription == null ? "removed" : monitoredItem.Subscription.Id.ToString())}");
+                    Logger.Information($" with publishing interval: {monitoredItem.Subscription.PublishingInterval} and sampling interval: {monitoredItem.SamplingInterval}):");
                 }
                 HubCommunication.Enqueue(messageData);
             }
@@ -1123,7 +1123,7 @@ namespace OpcPublisher
                     opcMonitoredItem.RequestedSamplingInterval = opcSamplingInterval;
                     opcSubscription.OpcMonitoredItems.Add(opcMonitoredItem);
                     Interlocked.Increment(ref NodeConfigVersion);
-                    Logger.Debug($"AddNodeForMonitoring: Added item with nodeId '{(expandedNodeId == null ? nodeId.ToString() : expandedNodeId.ToString())}' for monitoring.");
+                    Logger.Information($"AddNodeForMonitoring: Added item with nodeId '{(expandedNodeId == null ? nodeId.ToString() : expandedNodeId.ToString())}' for monitoring.");
 
                     // trigger the actual OPC communication with the server to be done
                     Task t = Task.Run(async () => await ConnectAndMonitorAsync(ct));
@@ -1131,7 +1131,7 @@ namespace OpcPublisher
                 }
                 else
                 {
-                    Logger.Debug($"AddNodeForMonitoring: Node with Id '{(expandedNodeId == null ? nodeId.ToString() : expandedNodeId.ToString())}' is already monitored.");
+                    Logger.Information($"AddNodeForMonitoring: Node with Id '{(expandedNodeId == null ? nodeId.ToString() : expandedNodeId.ToString())}' is already monitored.");
                 }
             }
             catch (Exception e)

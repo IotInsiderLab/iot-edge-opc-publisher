@@ -568,6 +568,7 @@ namespace OpcPublisher
                     {
                         return;
                     }
+                    Logger.Information($"IoT Hub communication established successfully!");
                 }
 
                 if (!await CreateOpcPublishingDataAsync())

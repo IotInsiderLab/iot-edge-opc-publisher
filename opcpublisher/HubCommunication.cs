@@ -125,11 +125,11 @@ namespace OpcPublisher
                     _edgeHubClient.SetConnectionStatusChangesHandler(ConnectionStatusChange);
 
                     // open connection
-                    Logger.Debug($"Open EdgeHub communication");
+                    Logger.Information($"Open EdgeHub communication");
                     await _edgeHubClient.OpenAsync();
 
                     // init twin properties and method callbacks
-                    Logger.Debug($"Register desired properties and method callbacks");
+                    Logger.Information($"Register desired properties and method callbacks");
 
                     // register property update handler
                     await _edgeHubClient.SetDesiredPropertyUpdateCallbackAsync(DesiredPropertiesUpdate, null);
@@ -149,13 +149,13 @@ namespace OpcPublisher
                     _iotHubClient.SetConnectionStatusChangesHandler(ConnectionStatusChange);
 
                     // open connection
-                    Logger.Debug($"Open IoTHub communication");
+                    Logger.Information($"Open IoTHub communication");
                     await _iotHubClient.OpenAsync();
 
                     // init twin properties and method callbacks (not supported for HTTP)
                     if (!IsHttp1Transport())
                     {
-                        Logger.Debug($"Register desired properties and method callbacks");
+                        Logger.Information($"Register desired properties and method callbacks");
 
                         // register property update handler
                         await _iotHubClient.SetDesiredPropertyUpdateCallbackAsync(DesiredPropertiesUpdate, null);
@@ -168,7 +168,7 @@ namespace OpcPublisher
                         await _iotHubClient.SetMethodHandlerAsync("GetConfiguredNodesOnEndpoint", HandleGetConfiguredNodesOnEndpointMethodAsync, _iotHubClient);
                     }
                 }
-                Logger.Debug($"Init D2C message processing");
+                Logger.Information($"Init D2C message processing");
                 return await InitMessageProcessingAsync();
             }
             catch (Exception e)
@@ -182,8 +182,8 @@ namespace OpcPublisher
         {
             try
             {
-                Logger.Debug("Desired property update:");
-                Logger.Debug(JsonConvert.SerializeObject(desiredProperties));
+                Logger.Information("Desired property update:");
+                Logger.Information(JsonConvert.SerializeObject(desiredProperties));
 
                 // todo - add handling if we use properties
             }
@@ -219,7 +219,7 @@ namespace OpcPublisher
             HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
             try
             {
-                Logger.Debug("PublishNodes method called.");
+                Logger.Information("PublishNodes method called.");
                 publishNodesMethodData = JsonConvert.DeserializeObject<PublishNodesMethodRequestModel>(methodRequest.DataAsJson);
                 endpointUrl = new Uri(publishNodesMethodData.EndpointUrl);
             }
@@ -338,7 +338,7 @@ namespace OpcPublisher
             HttpStatusCode statusCode = HttpStatusCode.OK;
             try
             {
-                Logger.Debug("UnpublishNodes method called.");
+                Logger.Information("UnpublishNodes method called.");
                 unpublishNodesMethodData = JsonConvert.DeserializeObject<UnpublishNodesMethodRequestModel>(methodRequest.DataAsJson);
                 endpointUrl = new Uri(unpublishNodesMethodData.EndpointUrl);
             }
@@ -442,7 +442,7 @@ namespace OpcPublisher
 
             try
             {
-                Logger.Debug("UnpublishAllNodes method called.");
+                Logger.Information("UnpublishAllNodes method called.");
                 unpublishAllNodesMethodData = JsonConvert.DeserializeObject<UnpublishAllNodesMethodRequestModel>(methodRequest.DataAsJson);
                 if (unpublishAllNodesMethodData != null && unpublishAllNodesMethodData.EndpointUrl != null)
                 {
@@ -526,7 +526,7 @@ namespace OpcPublisher
             GetConfiguredEndpointsMethodRequestModel getConfiguredEndpointsMethodRequest = null;
             try
             {
-                Logger.Debug("HandleGetConfiguredEndpointsMethodAsync method called.");
+                Logger.Information("HandleGetConfiguredEndpointsMethodAsync method called.");
                 getConfiguredEndpointsMethodRequest = JsonConvert.DeserializeObject<GetConfiguredEndpointsMethodRequestModel>(methodRequest.DataAsJson);
             }
             catch (Exception e)
@@ -600,7 +600,7 @@ namespace OpcPublisher
             GetConfiguredNodesOnEndpointMethodRequestModel getConfiguredNodesOnEndpointMethodRequest = null;
             try
             {
-                Logger.Debug("HandleGetConfiguredNodesOnEndpointMethodAsync method called.");
+                Logger.Information("HandleGetConfiguredNodesOnEndpointMethodAsync method called.");
                 getConfiguredNodesOnEndpointMethodRequest = JsonConvert.DeserializeObject<GetConfiguredNodesOnEndpointMethodRequestModel>(methodRequest.DataAsJson);
                 endpointUrl = new Uri(getConfiguredNodesOnEndpointMethodRequest.EndpointUrl);
             }
@@ -994,7 +994,7 @@ namespace OpcPublisher
                                     // add the message and a comma to the buffer
                                     hubMessage.Write(Encoding.UTF8.GetBytes(jsonMessage.ToString()), 0, jsonMessageSize);
                                     hubMessage.Write(Encoding.UTF8.GetBytes(","), 0, 1);
-                                    Logger.Debug($"Added new message with size {jsonMessageSize} to hub message (size is now {(hubMessage.Position - 1)}).");
+                                    Logger.Information($"Added new message with size {jsonMessageSize} to hub message (size is now {(hubMessage.Position - 1)}).");
                                     continue;
                                 }
                                 else
@@ -1059,7 +1059,7 @@ namespace OpcPublisher
                                     }
                                     SentMessages++;
                                     SentLastTime = DateTime.UtcNow;
-                                    Logger.Debug($"Sending {encodedhubMessage.BodyStream.Length} bytes to hub.");
+                                    Logger.Information($"Sending {encodedhubMessage.BodyStream.Length} bytes to hub.");
                                 }
                                 catch
                                 {

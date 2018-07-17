@@ -119,6 +119,7 @@ namespace OpcPublisher
 
                 // connect to IoTHub
                 DeviceClient hubClient = DeviceClient.CreateFromConnectionString(DeviceConnectionString, IotHubProtocol);
+                Logger.Information($"Connected with device client.");
                 return (await InitHubCommunicationAsync(hubClient, IotHubProtocol));
             }
             catch (Exception e)
