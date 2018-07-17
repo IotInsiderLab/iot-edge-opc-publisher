@@ -1059,12 +1059,12 @@ namespace OpcPublisher
                                     Logger.Information("About to sent message");
                                     if (_iotHubClient != null)
                                     {
-                                        Logger.Information("Sending messagewith iot hub client");
+                                        Logger.Information("Sending message with iot hub client");
                                         await _iotHubClient.SendEventAsync(encodedhubMessage);
                                     }
                                     else
                                     {
-                                        Logger.Information("Sending messagewith edge hub client");
+                                        Logger.Information("Sending message with edge hub client");
                                         await _edgeHubClient.SendEventAsync(encodedhubMessage);
                                     }
                                     Logger.Information("MessageSent");
@@ -1072,8 +1072,9 @@ namespace OpcPublisher
                                     SentLastTime = DateTime.UtcNow;
                                     Logger.Information($"Sending {encodedhubMessage.BodyStream.Length} bytes to hub.");
                                 }
-                                catch
+                                catch (Exception e)
                                 {
+                                    Logger.Information(e, "Failed when sending message to the hub");
                                     FailedMessages++;
                                 }
 
