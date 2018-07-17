@@ -746,6 +746,7 @@ namespace OpcPublisher
             if (_monitoredItemsDataQueue.TryAdd(json) == false)
             {
                 Interlocked.Increment(ref _enqueueFailureCount);
+                Logger.Information($"Enqueuing failed with counter:{_enqueueFailureCount}");
                 if (_enqueueFailureCount % 10000 == 0)
                 {
                     Logger.Information($"The internal monitored item message queue is above its capacity of {_monitoredItemsDataQueue.BoundedCapacity}. We have already lost {_enqueueFailureCount} monitored item notifications:(");
