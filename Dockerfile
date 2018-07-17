@@ -4,7 +4,6 @@ ARG build_base_tag=2.1-sdk-nanoserver-1803
 FROM microsoft/dotnet:${build_base_tag} AS build
 WORKDIR /app
 
-# copy csproj and restore as distinct layers
 COPY opcpublisher/*.csproj ./opcpublisher/
 WORKDIR /app/opcpublisher
 RUN dotnet restore
