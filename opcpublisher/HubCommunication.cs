@@ -1048,20 +1048,26 @@ namespace OpcPublisher
                                 hubMessage.Write(Encoding.UTF8.GetBytes("]"), 0, 1);
                                 encodedhubMessage = new Microsoft.Azure.Devices.Client.Message(hubMessage.ToArray());
                             }
-                            if (_iotHubClient != null || _edgeHubClient != null)
+                            var canSendMessage = _iotHubClient != null || _edgeHubClient != null;
+                            Logger.Information($"Message can be sent: {canSendMessage}");  
+                            if (canSendMessage)
                             {
                                 nextSendTime += TimeSpan.FromSeconds(DefaultSendIntervalSeconds);
                                 try
                                 {
                                     SentBytes += encodedhubMessage.GetBytes().Length;
+                                    Logger.Information("About to sent message");
                                     if (_iotHubClient != null)
                                     {
+                                        Logger.Information("Sending messagewith iot hub client");
                                         await _iotHubClient.SendEventAsync(encodedhubMessage);
                                     }
                                     else
                                     {
+                                        Logger.Information("Sending messagewith edge hub client");
                                         await _edgeHubClient.SendEventAsync(encodedhubMessage);
                                     }
+                                    Logger.Information("MessageSent");
                                     SentMessages++;
                                     SentLastTime = DateTime.UtcNow;
                                     Logger.Information($"Sending {encodedhubMessage.BodyStream.Length} bytes to hub.");
