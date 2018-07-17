@@ -409,8 +409,8 @@ namespace OpcPublisher
                     InitLogging();
 
                     // show message
-                    Logger.Error(e, "Error in command line options");
-                    Logger.Error($"Command line arguments: {String.Join(" ", args)}");
+                    Logger.Information(e, "Error in command line options");
+                    Logger.Information($"Command line arguments: {String.Join(" ", args)}");
 
                     // show usage
                     Usage(options);
@@ -457,8 +457,8 @@ namespace OpcPublisher
                         }
                     default:
                         {
-                            Logger.Error("Error in command line options");
-                            Logger.Error($"Command line arguments: {String.Join(" ", args)}");
+                            Logger.Information("Error in command line options");
+                            Logger.Information($"Command line arguments: {String.Join(" ", args)}");
                             Usage(options);
                             return;
                         }
@@ -531,8 +531,8 @@ namespace OpcPublisher
                 }
                 catch (Exception e)
                 {
-                    Logger.Fatal(e, "Failed to start Publisher OPC UA server.");
-                    Logger.Fatal("exiting...");
+                    Logger.Information(e, "Failed to start Publisher OPC UA server.");
+                    Logger.Information("exiting...");
                     return;
                 }
 
@@ -632,14 +632,14 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Fatal(e, e.StackTrace);
+                Logger.Information(e, e.StackTrace);
                 e = e.InnerException ?? null;
                 while (e != null)
                 {
-                    Logger.Fatal(e, e.StackTrace);
+                    Logger.Information(e, e.StackTrace);
                     e = e.InnerException ?? null;
                 }
-                Logger.Fatal("Publisher exiting... ");
+                Logger.Information("Publisher exiting... ");
             }
         }
 
@@ -667,7 +667,7 @@ namespace OpcPublisher
                 }
                 catch (Exception e)
                 {
-                    Logger.Error(e, $"Failed to connect and monitor a disconnected server. {(e.InnerException != null ? e.InnerException.Message : "")}");
+                    Logger.Information(e, $"Failed to connect and monitor a disconnected server. {(e.InnerException != null ? e.InnerException.Message : "")}");
                 }
                 try
                 {
@@ -706,7 +706,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Fatal(e, "Failed to shutdown all sessions.");
+                Logger.Information(e, "Failed to shutdown all sessions.");
             }
 
             // Wait and continue after a while.

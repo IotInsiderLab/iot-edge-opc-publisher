@@ -173,7 +173,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Failure initializing hub communication processing.");
+                Logger.Information(e, "Failure initializing hub communication processing.");
                 return false;
             }
         }
@@ -191,12 +191,12 @@ namespace OpcPublisher
             {
                 foreach (Exception ex in e.InnerExceptions)
                 {
-                    Logger.Error(ex, "Error in desired property update.");
+                    Logger.Information(ex, "Error in desired property update.");
                 }
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error in desired property update.");
+                Logger.Information(e, "Error in desired property update.");
             }
             return Task.CompletedTask;
         }
@@ -225,12 +225,12 @@ namespace OpcPublisher
             }
             catch (UriFormatException)
             {
-                Logger.Error($"PublishNodesMethod: The EndpointUrl has an invalid format '{publishNodesMethodData.EndpointUrl}'!");
+                Logger.Information($"PublishNodesMethod: The EndpointUrl has an invalid format '{publishNodesMethodData.EndpointUrl}'!");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"PublishNodesMethod");
+                Logger.Information(e, $"PublishNodesMethod");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
 
@@ -280,7 +280,7 @@ namespace OpcPublisher
                     }
                     catch (Exception e)
                     {
-                        Logger.Error(e, $"PublishNodesMethod: The NodeId has an invalid format '{node.Id}'!");
+                        Logger.Information(e, $"PublishNodesMethod: The NodeId has an invalid format '{node.Id}'!");
                         continue;
                     }
 
@@ -303,7 +303,7 @@ namespace OpcPublisher
                     }
                     catch (Exception e)
                     {
-                        Logger.Error(e, $"PublishNodesMethod: Exception while trying to configure publishing node '{(isNodeIdFormat ? nodeId.ToString() : expandedNodeId.ToString())}'");
+                        Logger.Information(e, $"PublishNodesMethod: Exception while trying to configure publishing node '{(isNodeIdFormat ? nodeId.ToString() : expandedNodeId.ToString())}'");
                         return (new MethodResponse((int)HttpStatusCode.InternalServerError));
                     }
                 }
@@ -312,7 +312,7 @@ namespace OpcPublisher
             {
                 foreach (Exception ex in e.InnerExceptions)
                 {
-                    Logger.Error(ex, "Error in PublishNodesMethod method handler.");
+                    Logger.Information(ex, "Error in PublishNodesMethod method handler.");
                 }
                 // Indicate that the message treatment is not completed
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
@@ -344,12 +344,12 @@ namespace OpcPublisher
             }
             catch (UriFormatException)
             {
-                Logger.Error($"UnpublishNodesMethod: The EndpointUrl has an invalid format '{unpublishNodesMethodData.EndpointUrl}'!");
+                Logger.Information($"UnpublishNodesMethod: The EndpointUrl has an invalid format '{unpublishNodesMethodData.EndpointUrl}'!");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"UnpublishNodesMethod");
+                Logger.Information(e, $"UnpublishNodesMethod");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
 
@@ -376,7 +376,7 @@ namespace OpcPublisher
                 if (opcSession == null)
                 {
                     // do nothing if there is no session for this endpoint.
-                    Logger.Error($"UnpublishNodes: Session for endpoint '{endpointUrl.OriginalString}' not found.");
+                    Logger.Information($"UnpublishNodes: Session for endpoint '{endpointUrl.OriginalString}' not found.");
                     return (new MethodResponse((int)HttpStatusCode.Gone));
                 }
                 else
@@ -399,7 +399,7 @@ namespace OpcPublisher
                         }
                         catch (Exception e)
                         {
-                            Logger.Error(e, $"UnpublishNodesMethod: The NodeId has an invalid format '{node.Id}'!");
+                            Logger.Information(e, $"UnpublishNodesMethod: The NodeId has an invalid format '{node.Id}'!");
                             return (new MethodResponse((int)HttpStatusCode.InternalServerError));
                         }
 
@@ -420,7 +420,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"UnpublishNodes: Exception while trying to configure publishing node '{nodeId.ToString()}'");
+                Logger.Information(e, $"UnpublishNodes: Exception while trying to configure publishing node '{nodeId.ToString()}'");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
             finally
@@ -451,12 +451,12 @@ namespace OpcPublisher
             }
             catch (UriFormatException)
             {
-                Logger.Error($"UnpublishAllNodes: The EndpointUrl has an invalid format '{unpublishAllNodesMethodData.EndpointUrl}'!");
+                Logger.Information($"UnpublishAllNodes: The EndpointUrl has an invalid format '{unpublishAllNodesMethodData.EndpointUrl}'!");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"UnpublishAllNodes");
+                Logger.Information(e, $"UnpublishAllNodes");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
 
@@ -508,7 +508,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"UnpublishAllNodes: Exception while trying to unpublish nodes");
+                Logger.Information(e, $"UnpublishAllNodes: Exception while trying to unpublish nodes");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
             finally
@@ -531,7 +531,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "HandleGetConfiguredEndpointsMethodAsync");
+                Logger.Information(e, "HandleGetConfiguredEndpointsMethodAsync");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
 
@@ -547,7 +547,7 @@ namespace OpcPublisher
                 uint requestedNodeConfigVersion = (uint)(getConfiguredEndpointsMethodRequest.ContinuationToken >> 32);
                 if (nodeConfigVersion != requestedNodeConfigVersion)
                 {
-                    Logger.Error($"HandleGetConfiguredEndpointsMethodAsync: The node configuration has changed. Requested version: {requestedNodeConfigVersion:X8}, Current version '{nodeConfigVersion:X8}'!");
+                    Logger.Information($"HandleGetConfiguredEndpointsMethodAsync: The node configuration has changed. Requested version: {requestedNodeConfigVersion:X8}, Current version '{nodeConfigVersion:X8}'!");
                     return (new MethodResponse((int)HttpStatusCode.Gone));
                 }
                 startIndex = (uint)(getConfiguredEndpointsMethodRequest.ContinuationToken & 0x0FFFFFFFFL);
@@ -606,12 +606,12 @@ namespace OpcPublisher
             }
             catch (UriFormatException)
             {
-                Logger.Error($"HandleGetConfiguredNodesOnEndpointMethodAsync: The EndpointUrl has an invalid format '{getConfiguredNodesOnEndpointMethodRequest.EndpointUrl}'!");
+                Logger.Information($"HandleGetConfiguredNodesOnEndpointMethodAsync: The EndpointUrl has an invalid format '{getConfiguredNodesOnEndpointMethodRequest.EndpointUrl}'!");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"HandleGetConfiguredNodesOnEndpointMethodAsync");
+                Logger.Information(e, $"HandleGetConfiguredNodesOnEndpointMethodAsync");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
 
@@ -622,7 +622,7 @@ namespace OpcPublisher
             // there should be only one config file entry per endpoint
             if (configFileEntries.Count != 1)
             {
-                Logger.Error($"HandleGetConfiguredNodesOnEndpointMethodAsync: There are more configuration entries for endpoint '{endpointUrl}'. Aborting...");
+                Logger.Information($"HandleGetConfiguredNodesOnEndpointMethodAsync: There are more configuration entries for endpoint '{endpointUrl}'. Aborting...");
                 return (new MethodResponse((int)HttpStatusCode.InternalServerError));
             }
 
@@ -636,7 +636,7 @@ namespace OpcPublisher
                 uint requestedNodeConfigVersion = (uint)(getConfiguredNodesOnEndpointMethodRequest.ContinuationToken >> 32);
                 if (nodeConfigVersion != requestedNodeConfigVersion)
                 {
-                    Logger.Error($"HandleGetConfiguredNodesOnEndpointMethodAsync: The node configuration has changed. Requested version: {requestedNodeConfigVersion:X8}, Current version '{nodeConfigVersion:X8}'!");
+                    Logger.Information($"HandleGetConfiguredNodesOnEndpointMethodAsync: The node configuration has changed. Requested version: {requestedNodeConfigVersion:X8}, Current version '{nodeConfigVersion:X8}'!");
                     return (new MethodResponse((int)HttpStatusCode.Gone));
                 }
                 startIndex = (uint)(getConfiguredNodesOnEndpointMethodRequest.ContinuationToken & 0x0FFFFFFFFL);
@@ -702,7 +702,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Failure initializing message processing.");
+                Logger.Information(e, "Failure initializing message processing.");
                 return false;
             }
         }
@@ -732,7 +732,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Failure while shutting down hub messaging.");
+                Logger.Information(e, "Failure while shutting down hub messaging.");
             }
         }
 
@@ -875,7 +875,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Generation of JSON message failed.");
+                Logger.Information(e, "Generation of JSON message failed.");
             }
             return string.Empty;
         }
@@ -902,7 +902,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Generation of IoTCentral JSON message failed.");
+                Logger.Information(e, "Generation of IoTCentral JSON message failed.");
             }
             return string.Empty;
         }
@@ -978,8 +978,8 @@ namespace OpcPublisher
                             // sanity check that the user has set a large enough messages size
                             if ((HubMessageSize > 0 && jsonMessageSize > HubMessageSize ) || (HubMessageSize == 0 && jsonMessageSize > hubMessageBufferSize))
                             {
-                                Logger.Error($"There is a telemetry message (size: {jsonMessageSize}), which will not fit into an hub message (max size: {hubMessageBufferSize}].");
-                                Logger.Error($"Please check your hub message size settings. The telemetry message will be discarded silently. Sorry:(");
+                                Logger.Information($"There is a telemetry message (size: {jsonMessageSize}), which will not fit into an hub message (max size: {hubMessageBufferSize}].");
+                                Logger.Information($"Please check your hub message size settings. The telemetry message will be discarded silently. Sorry:(");
                                 TooLargeCount++;
                                 continue;
                             }
@@ -1086,7 +1086,7 @@ namespace OpcPublisher
                         }
                         catch (Exception e)
                         {
-                            Logger.Error(e, "Exception while sending message to hub. Dropping message...");
+                            Logger.Information(e, "Exception while sending message to hub. Dropping message...");
                         }
                     }
                 }
@@ -1095,7 +1095,7 @@ namespace OpcPublisher
                     if (!(e is OperationCanceledException))
                     {
 
-                        Logger.Error(e, "Error while processing monitored item messages.");
+                        Logger.Information(e, "Error while processing monitored item messages.");
                     }
                 }
             }

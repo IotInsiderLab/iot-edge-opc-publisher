@@ -213,7 +213,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Fatal(e, "Loading of the node configuration file failed. Does the file exist and has correct syntax? Exiting...");
+                Logger.Information(e, "Loading of the node configuration file failed. Does the file exist and has correct syntax? Exiting...");
                 return false;
             }
             finally
@@ -279,7 +279,7 @@ namespace OpcPublisher
                             }
                             else
                             {
-                                Logger.Error($"Node {nodeInfo.OriginalId} has an invalid format. Skipping...");
+                                Logger.Information($"Node {nodeInfo.OriginalId} has an invalid format. Skipping...");
                             }
                         }
 
@@ -293,7 +293,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Fatal(e, "Creation of the internal OPC data managment structures failed. Exiting...");
+                Logger.Information(e, "Creation of the internal OPC data managment structures failed. Exiting...");
                 return false;
             }
             finally
@@ -370,7 +370,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Creation of configuration file entries failed.");
+                Logger.Information(e, "Creation of configuration file entries failed.");
                 publisherConfigurationFileEntries = null;
             }
             finally
@@ -455,7 +455,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Creation of configuration file entries failed.");
+                Logger.Information(e, "Creation of configuration file entries failed.");
                 publisherConfigurationFileEntriesLegacy = null;
             }
             finally
@@ -489,7 +489,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Update of node configuration file failed.");
+                Logger.Information(e, "Update of node configuration file failed.");
             }
         }
 

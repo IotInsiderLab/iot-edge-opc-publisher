@@ -67,7 +67,7 @@ namespace OpcPublisher
                         }
                         catch
                         {
-                            Logger.Fatal($"The regular expression '{value}' used for the property 'Pattern' is not a valid regular expression. Please change.");
+                            Logger.Information($"The regular expression '{value}' used for the property 'Pattern' is not a valid regular expression. Please change.");
                             throw new Exception($"The regular expression '{value}' used for the property 'Pattern' is not a valid regular expression. Please change.");
                         }
                     }
@@ -373,25 +373,25 @@ namespace OpcPublisher
         {
             if (config.ForEndpointUrl == null)
             {
-                Logger.Fatal("Each object in the 'EndpointSpecific' array must have a property 'ForEndpointUrl'. Please change.");
+                Logger.Information("Each object in the 'EndpointSpecific' array must have a property 'ForEndpointUrl'. Please change.");
                 return false;
 
             }
             if (_telemetryConfiguration.EndpointSpecific.Count(c => !string.IsNullOrEmpty(c.ForEndpointUrl) && c.ForEndpointUrl.Equals(config?.ForEndpointUrl, StringComparison.OrdinalIgnoreCase)) > 1)
             {
-                Logger.Fatal($"The value '{config.ForEndpointUrl}' for property 'ForEndpointUrl' is only allowed to used once in the 'EndpointSpecific' array. Please change.");
+                Logger.Information($"The value '{config.ForEndpointUrl}' for property 'ForEndpointUrl' is only allowed to used once in the 'EndpointSpecific' array. Please change.");
                 return false;
             }
             if (config.EndpointUrl.Name != null || config.NodeId.Name != null ||
                 config.MonitoredItem.ApplicationUri.Name != null || config.MonitoredItem.DisplayName.Name != null ||
                 config.Value.Value.Name != null || config.Value.SourceTimestamp.Name != null || config.Value.StatusCode.Name != null || config.Value.Status.Name != null)
             {
-                Logger.Fatal("The property 'Name' is not allowed in any object in the 'EndpointSpecific' array. Please change.");
+                Logger.Information("The property 'Name' is not allowed in any object in the 'EndpointSpecific' array. Please change.");
                 return false;
             }
             if (config.MonitoredItem.Flat != null || config.Value.Flat != null)
             {
-                Logger.Fatal("The property 'Flat' is not allowed in any object in the 'EndpointSpecific' array. Please change.");
+                Logger.Information("The property 'Flat' is not allowed in any object in the 'EndpointSpecific' array. Please change.");
                 return false;
             }
             return true;
@@ -442,7 +442,7 @@ namespace OpcPublisher
             {
                 if (_telemetryConfiguration.Defaults.ForEndpointUrl != null)
                 {
-                    Logger.Fatal("The property 'ForEndpointUrl' is not allowed in 'Defaults'. Please change.");
+                    Logger.Information("The property 'ForEndpointUrl' is not allowed in 'Defaults'. Please change.");
                     return false;
                 }
 
@@ -544,7 +544,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Fatal(e, "Loading of the telemetry configuration file failed. Does the file exist and has correct syntax? Exiting...");
+                Logger.Information(e, "Loading of the telemetry configuration file failed. Does the file exist and has correct syntax? Exiting...");
                 return false;
             }
             return true;

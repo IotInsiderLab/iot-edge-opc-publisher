@@ -370,7 +370,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error processing monitored item notification");
+                Logger.Information(e, "Error processing monitored item notification");
             }
         }
 
@@ -546,7 +546,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error in ConnectAndMonitorAsync.");
+                Logger.Information(e, "Error in ConnectAndMonitorAsync.");
             }
         }
 
@@ -594,7 +594,7 @@ namespace OpcPublisher
                 }
                 catch (Exception e)
                 {
-                    Logger.Error(e, $"Session creation to endpoint '{EndpointUrl.AbsoluteUri}' failed {++UnsuccessfulConnectionCount} time(s). Please verify if server is up and Publisher configuration is correct.");
+                    Logger.Information(e, $"Session creation to endpoint '{EndpointUrl.AbsoluteUri}' failed {++UnsuccessfulConnectionCount} time(s). Please verify if server is up and Publisher configuration is correct.");
                     State = SessionState.Disconnected;
                     OpcUaClientSession = null;
                     return;
@@ -644,7 +644,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error in ConnectSessions.");
+                Logger.Information(e, "Error in ConnectSessions.");
             }
             finally
             {
@@ -822,20 +822,20 @@ namespace OpcPublisher
                                 case StatusCodes.BadNodeIdInvalid:
                                 case StatusCodes.BadNodeIdUnknown:
                                     {
-                                        Logger.Error($"Failed to monitor node '{currentNodeId.Identifier}' on endpoint '{EndpointUrl}'.");
-                                        Logger.Error($"OPC UA ServiceResultException is '{sre.Result}'. Please check your publisher configuration for this node.");
+                                        Logger.Information($"Failed to monitor node '{currentNodeId.Identifier}' on endpoint '{EndpointUrl}'.");
+                                        Logger.Information($"OPC UA ServiceResultException is '{sre.Result}'. Please check your publisher configuration for this node.");
                                         break;
                                     }
                                 default:
                                     {
-                                        Logger.Error($"Unhandled OPC UA ServiceResultException '{sre.Result}' when monitoring node '{currentNodeId.Identifier}' on endpoint '{EndpointUrl}'. Continue.");
+                                        Logger.Information($"Unhandled OPC UA ServiceResultException '{sre.Result}' when monitoring node '{currentNodeId.Identifier}' on endpoint '{EndpointUrl}'. Continue.");
                                         break;
                                     }
                             }
                         }
                         catch (Exception e)
                         {
-                            Logger.Error(e, $"Failed to monitor node '{currentNodeId.Identifier}' on endpoint '{EndpointUrl}'");
+                            Logger.Information(e, $"Failed to monitor node '{currentNodeId.Identifier}' on endpoint '{EndpointUrl}'");
                         }
                     }
                    // opcSubscription.OpcUaClientSubscription.SetPublishingMode(true);
@@ -850,7 +850,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error in MonitorNodes.");
+                Logger.Information(e, "Error in MonitorNodes.");
             }
             finally
             {
@@ -996,7 +996,7 @@ namespace OpcPublisher
                 }
                 catch (Exception e)
                 {
-                    Logger.Error(e, $"Error while disconnecting '{EndpointUrl}'.");
+                    Logger.Information(e, $"Error while disconnecting '{EndpointUrl}'.");
                 }
                 ReleaseSession();
             }
@@ -1059,7 +1059,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error in InternalDisconnect.");
+                Logger.Information(e, "Error in InternalDisconnect.");
             }
             State = SessionState.Disconnected;
             MissedKeepAlives = 0;
@@ -1136,7 +1136,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"AddNodeForMonitoring: Exception while trying to add node '{(expandedNodeId == null ? nodeId.ToString() : expandedNodeId.ToString())}' for monitoring.");
+                Logger.Information(e, $"AddNodeForMonitoring: Exception while trying to add node '{(expandedNodeId == null ? nodeId.ToString() : expandedNodeId.ToString())}' for monitoring.");
                 return HttpStatusCode.InternalServerError;
             }
             finally
@@ -1208,7 +1208,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"RequestMonitorItemRemoval: Exception while trying to tag node '{(expandedNodeId == null ? nodeId.ToString() : expandedNodeId.ToString())}' to stop monitoring.");
+                Logger.Information(e, $"RequestMonitorItemRemoval: Exception while trying to tag node '{(expandedNodeId == null ? nodeId.ToString() : expandedNodeId.ToString())}' to stop monitoring.");
                 result = HttpStatusCode.InternalServerError;
             }
             finally
@@ -1238,7 +1238,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Check if node is published failed.");
+                Logger.Information(e, "Check if node is published failed.");
             }
             return false;
         }
@@ -1261,7 +1261,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Check if node is published failed.");
+                Logger.Information(e, "Check if node is published failed.");
             }
             finally
             {
@@ -1296,7 +1296,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Check if node is published failed.");
+                Logger.Information(e, "Check if node is published failed.");
             }
             finally
             {
@@ -1340,7 +1340,7 @@ namespace OpcPublisher
                     }
                     catch (Exception e)
                     {
-                        Logger.Error(e, $"Error while closing session to endpoint '{EndpointUrl.AbsoluteUri}'.");
+                        Logger.Information(e, $"Error while closing session to endpoint '{EndpointUrl.AbsoluteUri}'.");
                         State = SessionState.Disconnected;
                         return;
                     }
@@ -1425,7 +1425,7 @@ namespace OpcPublisher
                 }
                 catch (Exception ex)
                 {
-                    Logger.Error(ex, $"Error in keep alive handling for endpoint '{session.ConfiguredEndpoint.EndpointUrl}'. (message: '{ex.Message}'");
+                    Logger.Information(ex, $"Error in keep alive handling for endpoint '{session.ConfiguredEndpoint.EndpointUrl}'. (message: '{ex.Message}'");
                 }
             }
             else

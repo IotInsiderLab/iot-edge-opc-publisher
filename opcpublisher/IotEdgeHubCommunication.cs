@@ -51,7 +51,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, "Error in IoTEdgeHub initialization.)");
+                Logger.Information(e, "Error in IoTEdgeHub initialization.)");
                 return false;
             }
         }

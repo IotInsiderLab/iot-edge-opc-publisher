@@ -230,7 +230,7 @@ namespace OpcPublisher
                 }
                 catch (Exception e)
                 {
-                    Logger.Error(e, $"Can not add publisher certificate to trusted peer store. StorePath={PublisherOpcApplicationConfiguration.SecurityConfiguration.TrustedPeerCertificates.StorePath}");
+                    Logger.Information(e, $"Can not add publisher certificate to trusted peer store. StorePath={PublisherOpcApplicationConfiguration.SecurityConfiguration.TrustedPeerCertificates.StorePath}");
                 }
             }
             else
@@ -345,12 +345,12 @@ namespace OpcPublisher
             }
             if ((e.TraceMask & OpcTraceToLoggerError) != 0)
             {
-                Logger.Error(message);
+                Logger.Information(message);
                 return;
             }
             if ((e.TraceMask & OpcTraceToLoggerFatal) != 0)
             {
-                Logger.Fatal(message);
+                Logger.Information(message);
                 return;
             }
             return;

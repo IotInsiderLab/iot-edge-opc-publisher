@@ -90,7 +90,7 @@ namespace OpcPublisher
                         }
                         else
                         {
-                            Logger.Fatal($"Can not register ourselves with IoT Hub. Exiting...");
+                            Logger.Information($"Can not register ourselves with IoT Hub. Exiting...");
                             return false;
                         }
                     }
@@ -113,7 +113,7 @@ namespace OpcPublisher
 
                 if (string.IsNullOrEmpty(DeviceConnectionString))
                 {
-                    Logger.Fatal("Device connection string not found in secure store. Please pass it in at least once via command line option. Can not connect to IoTHub. Exiting...");
+                    Logger.Information("Device connection string not found in secure store. Please pass it in at least once via command line option. Can not connect to IoTHub. Exiting...");
                     return false;
                 }
 
@@ -124,7 +124,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Fatal(e, "Error in IoTHub initialization.");
+                Logger.Information(e, "Error in IoTHub initialization.");
                 return false;
             }
         }

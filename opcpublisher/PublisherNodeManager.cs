@@ -473,7 +473,7 @@ namespace OpcPublisher
         {
             if (string.IsNullOrEmpty(inputArguments[0] as string) || string.IsNullOrEmpty(inputArguments[1] as string))
             {
-                Logger.Error("PublishNode: Invalid Arguments when trying to publish a node.");
+                Logger.Information("PublishNode: Invalid Arguments when trying to publish a node.");
                 return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide all arguments as strings!");
             }
 
@@ -499,12 +499,12 @@ namespace OpcPublisher
             }
             catch (UriFormatException)
             {
-                Logger.Error($"PublishNode: The EndpointUrl has an invalid format '{inputArguments[1] as string}'!");
+                Logger.Information($"PublishNode: The EndpointUrl has an invalid format '{inputArguments[1] as string}'!");
                 return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide a valid OPC UA endpoint URL as second argument!");
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"PublishNode: The NodeId has an invalid format '{inputArguments[0] as string}'!");
+                Logger.Information(e, $"PublishNode: The NodeId has an invalid format '{inputArguments[0] as string}'!");
                 return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide a valid OPC UA NodeId in NodeId or ExpandedNodeId format as first argument!");
             }
 
@@ -547,7 +547,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"PublishNode: Exception while trying to configure publishing node '{(isNodeIdFormat ? nodeId.ToString() : expandedNodeId.ToString())}'");
+                Logger.Information(e, $"PublishNode: Exception while trying to configure publishing node '{(isNodeIdFormat ? nodeId.ToString() : expandedNodeId.ToString())}'");
                 return ServiceResult.Create(e, StatusCodes.BadUnexpectedError, $"Unexpected error publishing node: {e.Message}");
             }
             finally
@@ -564,7 +564,7 @@ namespace OpcPublisher
         {
             if (string.IsNullOrEmpty(inputArguments[0] as string) || string.IsNullOrEmpty(inputArguments[1] as string))
             {
-                Logger.Error("UnpublishNode: Invalid arguments!");
+                Logger.Information("UnpublishNode: Invalid arguments!");
                 return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide all arguments!");
             }
 
@@ -590,12 +590,12 @@ namespace OpcPublisher
             }
             catch (UriFormatException)
             {
-                Logger.Error($"UnpublishNode: The endpointUrl is invalid '{inputArguments[1] as string}'!");
+                Logger.Information($"UnpublishNode: The endpointUrl is invalid '{inputArguments[1] as string}'!");
                 return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide a valid OPC UA endpoint URL as second argument!");
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"UnpublishNode: The NodeId has an invalid format '{inputArguments[0] as string}'!");
+                Logger.Information(e, $"UnpublishNode: The NodeId has an invalid format '{inputArguments[0] as string}'!");
                 return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide a valid OPC UA NodeId in NodeId or ExpandedNodeId format as first argument!");
             }
 
@@ -622,7 +622,7 @@ namespace OpcPublisher
                 if (opcSession == null)
                 {
                     // do nothing if there is no session for this endpoint.
-                    Logger.Error($"UnpublishNode: Session for endpoint '{endpointUrl.OriginalString}' not found.");
+                    Logger.Information($"UnpublishNode: Session for endpoint '{endpointUrl.OriginalString}' not found.");
                     return ServiceResult.Create(StatusCodes.BadSessionIdInvalid, "Session for endpoint of node to unpublished not found!");
                 }
                 else
@@ -643,7 +643,7 @@ namespace OpcPublisher
             }
             catch (Exception e)
             {
-                Logger.Error(e, $"UnpublishNode: Exception while trying to configure publishing node '{nodeId.ToString()}'");
+                Logger.Information(e, $"UnpublishNode: Exception while trying to configure publishing node '{nodeId.ToString()}'");
                 return ServiceResult.Create(e, StatusCodes.BadUnexpectedError, $"Unexpected error unpublishing node: {e.Message}");
             }
             finally
@@ -665,7 +665,7 @@ namespace OpcPublisher
 
             if (string.IsNullOrEmpty(inputArguments[0] as string))
             {
-                Logger.Error($"GetPublishedNodesLegacy: endpointUrl is null or empty'!");
+                Logger.Information($"GetPublishedNodesLegacy: endpointUrl is null or empty'!");
                 return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide a valid OPC UA endpoint URL as first argument!");
             }
             else
@@ -676,7 +676,7 @@ namespace OpcPublisher
                 }
                 catch (UriFormatException)
                 {
-                    Logger.Error($"GetPublishedNodesLegacy: The endpointUrl is invalid '{inputArguments[0] as string}'!");
+                    Logger.Information($"GetPublishedNodesLegacy: The endpointUrl is invalid '{inputArguments[0] as string}'!");
                     return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide a valid OPC UA endpoint URL as first argument!");
                 }
             }
@@ -697,7 +697,7 @@ namespace OpcPublisher
 
             if (string.IsNullOrEmpty(inputArguments[0] as string))
             {
-                Logger.Error($"OnGetConfiguredNodesOnEndpointCall: endpointUrl is null or empty'!");
+                Logger.Information($"OnGetConfiguredNodesOnEndpointCall: endpointUrl is null or empty'!");
                 return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide a valid OPC UA endpoint URL as first argument!");
             }
             else
@@ -708,7 +708,7 @@ namespace OpcPublisher
                 }
                 catch (UriFormatException)
                 {
-                    Logger.Error($"OnGetConfiguredNodesOnEndpointCall: The endpointUrl is invalid '{inputArguments[0] as string}'!");
+                    Logger.Information($"OnGetConfiguredNodesOnEndpointCall: The endpointUrl is invalid '{inputArguments[0] as string}'!");
                     return ServiceResult.Create(StatusCodes.BadArgumentsMissing, "Please provide a valid OPC UA endpoint URL as first argument!");
                 }
             }
