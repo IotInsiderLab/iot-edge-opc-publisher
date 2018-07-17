@@ -1060,7 +1060,7 @@ namespace OpcPublisher
                                     if (_iotHubClient != null)
                                     {
                                         Logger.Information("Sending message with iot hub client");
-                                        await _iotHubClient.SendEventAsync(encodedhubMessage);
+                                      //  await _iotHubClient.SendEventAsync(encodedhubMessage);
                                     }
                                     else
                                     {
