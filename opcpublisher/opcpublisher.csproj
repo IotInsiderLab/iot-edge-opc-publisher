@@ -12,6 +12,7 @@
     <Company>Microsoft</Company>
     <Version>2.0</Version>
 	<DebugType>portable</DebugType>
+	<StartupObject></StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -29,7 +30,7 @@
 
   <ItemGroup>
     <Content Include="publishednodes.json">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
@@ -46,6 +47,12 @@
     <PackageReference Include="Serilog.Extensions.Logging" Version="2.0.2" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
     <PackageReference Include="Serilog.Sinks.File" Version="4.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="telemetryconfiguration.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "opcpublisher": {
+      "commandName": "Project",
+      "commandLineArgs": "opcuadevice2  --deviceconnectionstring=\"HostName=weatherstationhub.azure-devices.net;DeviceId=weatherDevice;SharedAccessKey=VaRBeJqeG3YVvPTEw+8zlcTwCI5qcZuh4HmysSNvYsk=\" --vc=true --noshutdown=true --ih=Http1 "
+    }
+  }
+}
