@@ -588,7 +588,8 @@ namespace OpcPublisher
                             false,
                             PublisherOpcApplicationConfiguration.ApplicationName,
                             timeout,
-                            new UserIdentity("host_computer", "123"),
+                            new UserIdentity(new AnonymousIdentityToken()),
+                           // new UserIdentity("host_computer", "123"),
                             null);
                 }
                 catch (Exception e)

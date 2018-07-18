@@ -1067,7 +1067,7 @@ namespace OpcPublisher
                                         Logger.Information("Sending message with edge hub client");
                                         await _edgeHubClient.SendEventAsync(encodedhubMessage);
                                     }
-                                    Logger.Information("MessageSent");
+                                    Logger.Information("Message Sent");
                                     SentMessages++;
                                     SentLastTime = DateTime.UtcNow;
                                     Logger.Information($"Sending {encodedhubMessage.BodyStream.Length} bytes to hub.");
