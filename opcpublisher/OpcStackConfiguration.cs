@@ -340,7 +340,7 @@ namespace OpcPublisher
             }
             if ((e.TraceMask & OpcTraceToLoggerWarning) != 0)
             {
-                Logger.Warning(message);
+                Logger.Information(message);
                 return;
             }
             if ((e.TraceMask & OpcTraceToLoggerError) != 0)

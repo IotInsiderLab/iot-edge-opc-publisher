@@ -52,7 +52,6 @@ namespace OpcPublisher
             //    Thread.Sleep(5000);
             //}
             MainAsync(args).Wait();
-            Console.ReadLine();
         }
 
         /// <summary>

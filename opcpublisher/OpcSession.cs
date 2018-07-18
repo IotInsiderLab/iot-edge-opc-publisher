@@ -751,7 +751,7 @@ namespace OpcPublisher
                                 int namespaceIndex = _namespaceTable.GetIndex(item.ConfigExpandedNodeId?.NamespaceUri);
                                 if (namespaceIndex < 0)
                                 {
-                                    Logger.Warning($"Syntax or namespace URI of ExpandedNodeId '{item.ConfigExpandedNodeId.ToString()}' is invalid and will be ignored.");
+                                    Logger.Information($"Syntax or namespace URI of ExpandedNodeId '{item.ConfigExpandedNodeId.ToString()}' is invalid and will be ignored.");
                                     continue;
                                 }
                                 currentNodeId = new NodeId(item.ConfigExpandedNodeId.Identifier, (ushort)namespaceIndex);
@@ -1396,7 +1396,7 @@ namespace OpcPublisher
                 {
                     if (!ServiceResult.IsGood(e.Status))
                     {
-                        Logger.Warning($"Session endpoint: {session.ConfiguredEndpoint.EndpointUrl} has Status: {e.Status}");
+                        Logger.Information($"Session endpoint: {session.ConfiguredEndpoint.EndpointUrl} has Status: {e.Status}");
                         Logger.Information($"Outstanding requests: {session.OutstandingRequestCount}, Defunct requests: {session.DefunctRequestCount}");
                         Logger.Information($"Good publish requests: {session.GoodPublishRequestCount}, KeepAlive interval: {session.KeepAliveInterval}");
                         Logger.Information($"SessionId: {session.SessionId}");
@@ -1407,7 +1407,7 @@ namespace OpcPublisher
                             Logger.Information($"Missed KeepAlives: {MissedKeepAlives}");
                             if (MissedKeepAlives >= OpcKeepAliveDisconnectThreshold)
                             {
-                                Logger.Warning($"Hit configured missed keep alive threshold of {OpcKeepAliveDisconnectThreshold}. Disconnecting the session to endpoint {session.ConfiguredEndpoint.EndpointUrl}.");
+                                Logger.Information($"Hit configured missed keep alive threshold of {OpcKeepAliveDisconnectThreshold}. Disconnecting the session to endpoint {session.ConfiguredEndpoint.EndpointUrl}.");
                                 session.KeepAlive -= StandardClient_KeepAlive;
                                 Task t = Task.Run(async () => await DisconnectAsync());
                             }
@@ -1430,7 +1430,7 @@ namespace OpcPublisher
             }
             else
             {
-                Logger.Warning("Keep alive arguments seems to be wrong.");
+                Logger.Information("Keep alive arguments seems to be wrong.");
             }
         }
 
