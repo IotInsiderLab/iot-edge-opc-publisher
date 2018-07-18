@@ -242,7 +242,7 @@ namespace OpcPublisher
 
                 if (ShutdownTokenSource.IsCancellationRequested)
                 {
-                    Logger.Warning($"PublishNodesMethod: Publisher shutdown detected. Aborting...");
+                    Logger.Information($"PublishNodesMethod: Publisher shutdown detected. Aborting...");
                     return (new MethodResponse((int)HttpStatusCode.Gone));
                 }
 
