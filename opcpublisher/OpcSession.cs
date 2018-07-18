@@ -58,6 +58,7 @@ namespace OpcPublisher
         /// </summary>
         public OpcMonitoredItem(NodeId nodeId, Uri sessionEndpointUrl)
         {
+            Logger.Information($"Node with identifier: {nodeId.Identifier} about to be initialized");
             ConfigNodeId = nodeId;
             ConfigExpandedNodeId = null;
             OriginalId = nodeId.ToString();
@@ -71,6 +72,7 @@ namespace OpcPublisher
         /// </summary>
         public OpcMonitoredItem(ExpandedNodeId expandedNodeId, Uri sessionEndpointUrl)
         {
+            Logger.Information($"Expanded node with identifier: {expandedNodeId.Identifier} about to be initialized");
             ConfigNodeId = null;
             ConfigExpandedNodeId = expandedNodeId;
             OriginalId = expandedNodeId.ToString();
@@ -209,22 +211,26 @@ namespace OpcPublisher
         /// </summary>
         public void MonitoredItem_Notification(MonitoredItem monitoredItem, MonitoredItemNotificationEventArgs args)
         {
+            Logger.Information("Monitored Item Notification triggered!");
             try
             {
                 if (args == null || args.NotificationValue == null || monitoredItem == null || monitoredItem.Subscription == null || monitoredItem.Subscription.Session == null)
                 {
+                    Logger.Information("Monitored item null");
                     return;
                 }
 
                 MonitoredItemNotification notification = args.NotificationValue as MonitoredItemNotification;
                 if (notification == null)
                 {
+                    Logger.Information("Notification null");
                     return;
                 }
 
                 DataValue value = notification.Value as DataValue;
                 if (value == null)
                 {
+                    Logger.Information("DataValue null");
                     return;
                 }
 
@@ -388,6 +394,7 @@ namespace OpcPublisher
             DiscardOldest = true;
             Notification = new MonitoredItemNotificationEventHandler(MonitoredItem_Notification);
             EndpointUrl = sessionEndpointUrl;
+            Logger.Information("OPC Session initialized with monitoring");
         }
     }
 
@@ -588,8 +595,8 @@ namespace OpcPublisher
                             false,
                             PublisherOpcApplicationConfiguration.ApplicationName,
                             timeout,
-                           // new UserIdentity(new AnonymousIdentityToken()),
-                            new UserIdentity("host_computer", "123"),
+                            new UserIdentity(new AnonymousIdentityToken()),
+                           // new UserIdentity("host_computer", "123"),
                             null);
                 }
                 catch (Exception e)
