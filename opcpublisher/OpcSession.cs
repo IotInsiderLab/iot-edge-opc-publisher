@@ -795,7 +795,7 @@ namespace OpcPublisher
                             opcSubscription.OpcUaClientSubscription.AddItem(monitoredItem);
                             if (additionalMonitoredItemsCount++ % 10000 == 0)
                             {
-                               // opcSubscription.OpcUaClientSubscription.SetPublishingMode(true);
+                                opcSubscription.OpcUaClientSubscription.SetPublishingMode(true);
                                 opcSubscription.OpcUaClientSubscription.ApplyChanges();
                             }
                             item.OpcUaClientMonitoredItem = monitoredItem;
@@ -845,7 +845,7 @@ namespace OpcPublisher
                             Logger.Information(e, $"Failed to monitor node '{currentNodeId.Identifier}' on endpoint '{EndpointUrl}'");
                         }
                     }
-                   // opcSubscription.OpcUaClientSubscription.SetPublishingMode(true);
+                    opcSubscription.OpcUaClientSubscription.SetPublishingMode(true);
                     opcSubscription.OpcUaClientSubscription.ApplyChanges();
                     stopWatch.Stop();
                     if (haveUnmonitoredItems == true)
