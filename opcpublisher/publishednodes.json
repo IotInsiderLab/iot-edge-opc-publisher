@@ -1,7 +1,7 @@
 ﻿[
   {
     "EndpointUrl": "opc.tcp://192.168.3.161:4880/Arburg",
-    "UseSecurity": false,
+    "UseSecurity": true,
     "OpcNodes": [
       {
         "ExpandedNodeId": "nsu=http://www.arburg.com/;i=243582",
@@ -20,18 +20,6 @@
         "OpcPublishingInterval": 500
       }
     ]
-  },
-  {
-    "EndpointUrl": "opc.tcp://192.168.3.161:4880/Arburg",
-    "NodeId": {
-      "Identifier": "ns=2;i=243580"
-    }
-  },
-  {
-    "EndpointUrl": "opc.tcp://192.168.3.161:4880/Arburg",
-    "NodeId": {
-      "Identifier": "ns=2;i=242620"
-    }
   }
 ] 
 
