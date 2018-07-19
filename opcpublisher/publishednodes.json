@@ -6,6 +6,10 @@
       {
         "ExpandedNodeId": "nsu=http://www.arburg.com/;i=243582",
         "OpcPublishingInterval": 500
+      },
+      {
+        "ExpandedNodeId": "nsu=http://www.arburg.com/;i=245532",
+        "OpcPublishingInterval": 500
       }
     ]
   }
