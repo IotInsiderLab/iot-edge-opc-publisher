@@ -92,6 +92,10 @@ namespace OpcPublisher
                 // no pattern set, return full string
                 if (_patternRegex == null)
                 {
+                    //TODO: This is changed in order to force getting list, please have a look at regex in telemetry config file
+                    stringToParse = stringToParse.Replace("\"[", "[");
+                    stringToParse = stringToParse.Replace("]\"", "]");
+                    stringToParse = stringToParse.Replace("\\\"", "\"");
                     return stringToParse;
                 }
 

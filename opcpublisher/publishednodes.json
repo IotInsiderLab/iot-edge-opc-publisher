@@ -1,4 +1,4 @@
-﻿[
+﻿/*[
   {
     "EndpointUrl": "opc.tcp://192.168.3.161:4880/Arburg",
     "UseSecurity": true,
@@ -21,23 +21,34 @@
       }
     ]
   }
-] 
+] */
 
-/*[
-  {
-   "EndpointUrl": "opc.tcp://192.168.42.67:4840/freeopcua/server",
-//  "EndpointUrl": "opc.tcp://192.168.0.102:4840/freeopcua/server",
+[
+   {
+    //    "EndpointUrl": "opc.tcp://192.168.42.67:4840/freeopcua/server",
+    "EndpointUrl": "opc.tcp://192.168.16.88:4840/freeopcua/server",
     "UseSecurity": false,
     "OpcNodes": [
       {
         "ExpandedNodeId": "nsu=http://example.proof.com;i=2",
-        "OpcPublishingInterval": 500
+        "OpcPublishingInterval": 20000
       },
       {
         "ExpandedNodeId": "nsu=http://example.proof.com;i=3",
-        "OpcPublishingInterval": 500
+        "OpcPublishingInterval": 20000
       }
-
     ]
-  }
-] */
+  } 
+ /* {
+    "EndpointUrl": "opc.tcp://192.168.16.88:4840/freeopcua/server",
+    "NodeId": {
+      "Identifier": "ns=2;i=1"
+    }
+  },
+  {
+    "EndpointUrl": "opc.tcp://192.168.16.88:4840/freeopcua/server",
+    "NodeId": {
+      "Identifier": "ns=2;i=4"
+    }
+  } */
+] 

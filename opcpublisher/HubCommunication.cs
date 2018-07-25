@@ -936,10 +936,11 @@ namespace OpcPublisher
                     MessageData messageData = new MessageData();
                     bool needToBufferMessage = false;
                     int jsonMessageSize = 0;
-
+                    var messageStart = "{ \"message\" : [";
+                    var messageEnd = "] }";
                     hubMessage.Position = 0;
                     hubMessage.SetLength(0);
-                    hubMessage.Write(Encoding.UTF8.GetBytes("["), 0, 1);
+                    hubMessage.Write(Encoding.UTF8.GetBytes(messageStart), 0, Encoding.UTF8.GetBytes(messageStart).Length);
                     while (true)
                     {
                         // sanity check the send interval, compute the timeout and get the next monitored item message
@@ -1031,7 +1032,7 @@ namespace OpcPublisher
                                 nextSendTime += TimeSpan.FromSeconds(DefaultSendIntervalSeconds);
                                 hubMessage.Position = 0;
                                 hubMessage.SetLength(0);
-                                hubMessage.Write(Encoding.UTF8.GetBytes("["), 0, 1);
+                                hubMessage.Write(Encoding.UTF8.GetBytes(messageStart), 0, Encoding.UTF8.GetBytes(messageStart).Length);
                                 continue;
                             }
 
@@ -1044,8 +1045,11 @@ namespace OpcPublisher
                             else
                             {
                                 // remove the trailing comma and add a closing square bracket
-                                hubMessage.SetLength(hubMessage.Length - 1);
-                                hubMessage.Write(Encoding.UTF8.GetBytes("]"), 0, 1);
+                                if (hubMessage.Length != messageStart.Length)
+                                {
+                                    hubMessage.SetLength(hubMessage.Length - 1);
+                                }
+                                hubMessage.Write(Encoding.UTF8.GetBytes(messageEnd), 0, Encoding.UTF8.GetBytes(messageEnd).Length);
                                 encodedhubMessage = new Microsoft.Azure.Devices.Client.Message(hubMessage.ToArray());
                             }
                             var canSendMessage = _iotHubClient != null || _edgeHubClient != null;
@@ -1081,7 +1085,7 @@ namespace OpcPublisher
                                 // reset the messaage
                                 hubMessage.Position = 0;
                                 hubMessage.SetLength(0);
-                                hubMessage.Write(Encoding.UTF8.GetBytes("["), 0, 1);
+                                hubMessage.Write(Encoding.UTF8.GetBytes(messageStart), 0, Encoding.UTF8.GetBytes(messageStart).Length);
 
                                 // if we had not yet buffered the last message because there was not enough space, buffer it now
                                 if (needToBufferMessage)

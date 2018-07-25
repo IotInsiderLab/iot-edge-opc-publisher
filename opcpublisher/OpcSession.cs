@@ -334,7 +334,7 @@ namespace OpcPublisher
                             // we either have a value in quotes or just a value
                             int valueLength;
                             int valueStart = marker.Length;
-                            if (valueString.IndexOf("\"", valueStart) >= 0)
+                            if (valueString.IndexOf("\"", valueStart) >= 0 && !valueString.Contains("["))
                             {
                                 // value is in quotes and two closing curly brackets at the end
                                 valueStart++;
@@ -595,8 +595,8 @@ namespace OpcPublisher
                             false,
                             PublisherOpcApplicationConfiguration.ApplicationName,
                             timeout,
-                         //   new UserIdentity(new AnonymousIdentityToken()),
-                            new UserIdentity("host_computer", "123"),
+                            new UserIdentity(new AnonymousIdentityToken()),
+                         //   new UserIdentity("host_computer", "123"),
                             null);
                 }
                 catch (Exception e)
@@ -692,7 +692,7 @@ namespace OpcPublisher
                     }
 
                     // process all unmonitored items.
-                    var unmonitoredItems = opcSubscription.OpcMonitoredItems.Where(i => (i.State == OpcMonitoredItemState.Unmonitored || i.State == OpcMonitoredItemState.UnmonitoredNamespaceUpdateRequested));
+                    var unmonitoredItems = opcSubscription.OpcMonitoredItems;
                     int additionalMonitoredItemsCount = 0;
                     int monitoredItemsCount = 0;
                     bool haveUnmonitoredItems = false;
@@ -795,7 +795,7 @@ namespace OpcPublisher
                             opcSubscription.OpcUaClientSubscription.AddItem(monitoredItem);
                             if (additionalMonitoredItemsCount++ % 10000 == 0)
                             {
-                                opcSubscription.OpcUaClientSubscription.SetPublishingMode(true);
+                                //opcSubscription.OpcUaClientSubscription.SetPublishingMode(true);
                                 opcSubscription.OpcUaClientSubscription.ApplyChanges();
                             }
                             item.OpcUaClientMonitoredItem = monitoredItem;
@@ -845,7 +845,7 @@ namespace OpcPublisher
                             Logger.Information(e, $"Failed to monitor node '{currentNodeId.Identifier}' on endpoint '{EndpointUrl}'");
                         }
                     }
-                    opcSubscription.OpcUaClientSubscription.SetPublishingMode(true);
+                   // opcSubscription.OpcUaClientSubscription.SetPublishingMode(true);
                     opcSubscription.OpcUaClientSubscription.ApplyChanges();
                     stopWatch.Stop();
                     if (haveUnmonitoredItems == true)
